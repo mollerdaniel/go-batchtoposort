@@ -1,2 +1,3 @@
 # go-batchtoposort
-Go implementation of batch toposort
+Go implementation of batch toposort.
+
