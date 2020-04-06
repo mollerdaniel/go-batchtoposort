@@ -1,6 +1,7 @@
 package batchtoposort
 
 import (
+	"fmt"
 	"testing"
 
 	"gotest.tools/assert"
@@ -31,16 +32,29 @@ func TestToposort(t *testing.T) {
 	assert.NilError(t, err)
 	assert.DeepEqual(t, res, [][]string{
 		[]string{
-			"b", "a",
+			"a", "b",
 		},
 		[]string{
-			"d", "e", "c",
+			"c", "d", "e",
 		},
 		[]string{
-			"g", "h", "f",
+			"f", "g", "h",
 		},
 		[]string{
-			"j", "i",
+			"i", "j",
 		},
 	})
+}
+
+func ExampleToposort() {
+	x := make(map[string][]string)
+	x["a"] = []string{"b"}
+	x["b"] = []string{"c"}
+	x["c"] = []string{}
+	x["d"] = []string{"b"}
+	x["e"] = []string{"b"}
+
+	r, _ := BatchToposort(x)
+	fmt.Println(r)
+	// Output: [[a d e] [b] [c]]
 }

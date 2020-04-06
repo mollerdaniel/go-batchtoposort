@@ -2,6 +2,7 @@ package batchtoposort
 
 import (
 	"errors"
+	"sort"
 )
 
 // BatchToposort get task order.
@@ -12,6 +13,7 @@ func BatchToposort(m map[string][]string) ([][]string, error) {
 	rs := getrs(in)
 
 	for len(rs) > 0 {
+		sort.Strings(rs)
 		srt = append(srt, rs)
 		nr := []string{}
 		for _, r := range rs {
@@ -22,7 +24,6 @@ func BatchToposort(m map[string][]string) ([][]string, error) {
 				}
 			}
 		}
-
 		rs = nr
 	}
 	if len(getNonrs(in)) > 0 {
@@ -53,18 +54,18 @@ func getNonrs(m map[string]int) []string {
 }
 
 func countin(m map[string][]string) map[string]int {
-	counts := make(map[string]int)
+	c := make(map[string]int)
 	for k, va := range m {
-		if _, ok := counts[k]; !ok {
-			counts[k] = 0
+		if _, ok := c[k]; !ok {
+			c[k] = 0
 		}
 		x := va
 		for _, dep := range x {
-			if _, ok := counts[dep]; !ok {
-				counts[dep] = 0
+			if _, ok := c[dep]; !ok {
+				c[dep] = 0
 			}
-			counts[dep] = counts[dep] + 1
+			c[dep] = c[dep] + 1
 		}
 	}
-	return counts
+	return c
 }
