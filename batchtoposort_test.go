@@ -46,7 +46,7 @@ func TestToposort(t *testing.T) {
 	})
 }
 
-func ExampleToposort() {
+func ExampleBatchToposort() {
 	x := make(map[string][]string)
 	x["a"] = []string{"b"}
 	x["b"] = []string{"c"}
