@@ -1,7 +1,10 @@
-# go-batchtoposort
-Go implementation of batch toposort
+# Go implementation of batch toposort
 
-```
+[![GoDoc](https://godoc.org/github.com/mollerdaniel/go-batchtoposort?status.svg)](https://godoc.org/github.com/mollerdaniel/go-batchtoposort)
+
+
+
+```  go
 package main
 
 import (
@@ -33,7 +36,7 @@ func main() {
 }
 ```
 
-```
+```  go
 Output:
 [a b]
 [c d e]
