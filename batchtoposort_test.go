@@ -7,15 +7,15 @@ import (
 	"gotest.tools/assert"
 )
 
-func TestToposortCycle(t *testing.T) {
+func TestFromMapCycle(t *testing.T) {
 	x := make(map[string][]string)
 	x["a"] = []string{"b"}
 	x["b"] = []string{"a"}
-	_, err := BatchToposort(x)
+	_, err := FromMap(x)
 	assert.ErrorContains(t, err, "Cycle")
 }
 
-func TestToposort(t *testing.T) {
+func TestFromMap(t *testing.T) {
 	x := make(map[string][]string)
 	x["a"] = []string{"c", "f"}
 	x["b"] = []string{"d", "e"}
@@ -28,7 +28,7 @@ func TestToposort(t *testing.T) {
 	x["i"] = []string{}
 	x["j"] = []string{}
 
-	res, err := BatchToposort(x)
+	res, err := FromMap(x)
 	assert.NilError(t, err)
 	assert.DeepEqual(t, res, [][]string{
 		[]string{
@@ -46,7 +46,7 @@ func TestToposort(t *testing.T) {
 	})
 }
 
-func ExampleBatchToposort() {
+func ExampleFromMap() {
 	x := make(map[string][]string)
 	x["a"] = []string{"b"}
 	x["b"] = []string{"c"}
@@ -54,7 +54,7 @@ func ExampleBatchToposort() {
 	x["d"] = []string{"b"}
 	x["e"] = []string{"b"}
 
-	r, _ := BatchToposort(x)
+	r, _ := FromMap(x)
 	fmt.Println(r)
 	// Output: [[a d e] [b] [c]]
 }

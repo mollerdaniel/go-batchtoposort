@@ -5,8 +5,8 @@ import (
 	"sort"
 )
 
-// BatchToposort get task order.
-func BatchToposort(m map[string][]string) ([][]string, error) {
+// FromMap calculates the batched toposort for given map.
+func FromMap(m map[string][]string) ([][]string, error) {
 	in := countin(m)
 	srt := [][]string{}
 
@@ -18,7 +18,7 @@ func BatchToposort(m map[string][]string) ([][]string, error) {
 		nr := []string{}
 		for _, r := range rs {
 			for _, dependent := range m[r] {
-				in[dependent] = in[dependent] - 1
+				in[dependent]--
 				if in[dependent] == 0 {
 					nr = append(nr, dependent)
 				}
@@ -64,7 +64,7 @@ func countin(m map[string][]string) map[string]int {
 			if _, ok := c[dep]; !ok {
 				c[dep] = 0
 			}
-			c[dep] = c[dep] + 1
+			c[dep]++
 		}
 	}
 	return c

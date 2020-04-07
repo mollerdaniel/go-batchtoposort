@@ -26,7 +26,7 @@ func main() {
 	x["i"] = []string{}
 	x["j"] = []string{}
 
-	res, err := batchtoposort.BatchToposort(x)
+	res, err := batchtoposort.FromMap(x)
 	if err != nil {
 		fmt.Printf("Error: %v", err)
 	}
