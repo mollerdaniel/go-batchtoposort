@@ -31,17 +31,51 @@ func TestFromMap(t *testing.T) {
 	res, err := FromMap(x)
 	assert.NilError(t, err)
 	assert.DeepEqual(t, res, [][]string{
-		[]string{
+		{
 			"a", "b",
 		},
-		[]string{
+		{
 			"c", "d", "e",
 		},
-		[]string{
+		{
 			"f", "g", "h",
 		},
-		[]string{
+		{
 			"i", "j",
+		},
+	})
+}
+
+func TestGroups(t *testing.T) {
+	x := make(map[string][]string)
+	// Group A
+	x["a"] = []string{"b"}
+	x["b"] = []string{"c"}
+	x["c"] = []string{"d"}
+
+	// Group B
+	x["aa"] = []string{"bb"}
+	x["bb"] = []string{"cc"}
+	x["cc"] = []string{"dd"}
+
+	res, err := FromMap(x)
+	assert.NilError(t, err)
+	assert.DeepEqual(t, res, [][]string{
+		{
+			"a",
+			"aa",
+		},
+		{
+			"b",
+			"bb",
+		},
+		{
+			"c",
+			"cc",
+		},
+		{
+			"d",
+			"dd",
 		},
 	})
 }
