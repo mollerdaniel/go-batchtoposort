@@ -46,24 +46,37 @@ func TestFromMap(t *testing.T) {
 	})
 }
 
-func TestGroups(t *testing.T) {
+func TestIndividualGroups(t *testing.T) {
 	x := make(map[string][]string)
 	// Group A
 	x["a"] = []string{"b"}
 	x["b"] = []string{"c"}
 	x["c"] = []string{"d"}
+	x["d"] = []string{}
 
 	// Group B
 	x["aa"] = []string{"bb"}
 	x["bb"] = []string{"cc"}
 	x["cc"] = []string{"dd"}
+	x["dd"] = []string{}
+
+	// Edges to C
+	x["c"] = []string{"f", "y"}
+	x["f"] = []string{}
+	x["y"] = []string{}
+
+	// Individual Group in the DAG
+	x["foo"] = []string{}
 
 	res, err := FromMap(x)
 	assert.NilError(t, err)
+	fmt.Println(res)
 	assert.DeepEqual(t, res, [][]string{
 		{
 			"a",
 			"aa",
+			"d",
+			"foo",
 		},
 		{
 			"b",
@@ -74,8 +87,9 @@ func TestGroups(t *testing.T) {
 			"cc",
 		},
 		{
-			"d",
 			"dd",
+			"f",
+			"y",
 		},
 	})
 }
